@@ -3,8 +3,10 @@ app:
     type: annotation
 
 app.swagger_ui:
+#    path: /api/doc/{area}
     path: /api/doc
     methods: GET
+#    defaults: { _controller: nelmio_api_doc.controller.swagger_ui, area: default }
     defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
 
 api_login_check:

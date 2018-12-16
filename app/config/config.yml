@@ -77,18 +77,26 @@ lexik_jwt_authentication:
     token_ttl:        3600
 
 nelmio_api_doc:
+    areas:
+        default:
+            path_patterns: [ ^/api ]
+            host_patterns: [  ]
+#        internal:
+#            path_patterns: [ ^/internal ]
+#        commercial:
+#            path_patterns: [ ^/commercial ]
     documentation:
         host: 127.0.0.1:8000
         schemes: [HTTP]
         info:
             title: Lbc
-            description: Doc about lbc
+            description: Application lbc
             version: 1.0.0
-        securityDefinitions:
-            Bearer:
-                type: apiKey
-                description: 'Value: Bearer {JWT}'
-                name: Authorization
-                in: Header
+#        securityDefinitions:
+#            Bearer:
+#                type: apiKey
+#                description: 'Value: Bearer {JWT}'
+#                name: Authorization
+#                in: Header
 
 

@@ -2,29 +2,37 @@
 
 namespace AppBundle\Controller;
 
+use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Swagger\Annotations as SWG;
 
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
-     * @Method("GET")
+     * @Route("/", name="homepage", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return the landing page"
+     * )
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
     }
 
     /**
-     * @Route("/api", name="api")
-     * @Method("GET")
+     * @Route("/api", name="api", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return the index api"
+     * )
+     * @Security(name="Bearer")
      */
     public function apiAction(Request $request)
     {
