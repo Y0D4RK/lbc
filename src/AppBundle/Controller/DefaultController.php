@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Swagger\Annotations as SWG;
 
-class DefaultController extends Controller
+class DefaultController extends FOSRestController
 {
     /**
      * @Route("/", name="homepage", methods={"GET"})
@@ -36,11 +37,11 @@ class DefaultController extends Controller
      */
     public function apiAction(Request $request)
     {
-        return new JsonResponse(["status"=>"200", "message"=>"HTTP_OK"]);
-//        // retrieve the user connected from token jwt
-//        $user = $this->get('security.token_storage')->getToken()->getUser();
-//        $data = array("user" => $user);
-//        $view = $this->view($data, 200);
-//        return $this->handleView($view);
+//        return new JsonResponse(["status"=>"200", "message"=>"HTTP_OK"]);
+        // retrieve the user connected from token jwt
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $data = array("user" => $user);
+        $view = $this->view($data, 200);
+        return $this->handleView($view);
     }
 }

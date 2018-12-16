@@ -5,7 +5,10 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\ExclusionPolicy;
 
 /**
  * @ORM\Table(name="`user`")
@@ -37,6 +40,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Exclude()
      */
     private $password;
 
