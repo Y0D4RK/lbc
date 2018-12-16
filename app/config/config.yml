@@ -75,3 +75,20 @@ lexik_jwt_authentication:
     public_key:       '%kernel.project_dir%/config/jwt/public.pem'  # required for token verification
     pass_phrase:      '%jwt_key_pass_phrase%' # required for token creation, usage of an environment variable is recommended
     token_ttl:        3600
+
+nelmio_api_doc:
+    documentation:
+        host: 127.0.0.1:8000
+        schemes: [HTTP]
+        info:
+            title: Lbc
+            description: Doc about lbc
+            version: 1.0.0
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: 'Value: Bearer {JWT}'
+                name: Authorization
+                in: Header
+
+
