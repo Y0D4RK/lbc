@@ -31,3 +31,12 @@
 > php bin/console server:run
 
 ```
+
+## 4. User fixtures
+```
+> php bin/console doctrine:fixtures:load
+
+```
+- user: jdoe
+- password: 11235
+
