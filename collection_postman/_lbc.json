@@ -42,7 +42,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\": \"jdoe\",\n\t\"password\": \"11235\"\n}"
+					"raw": "{\n\t\"username\": \"john_doe@mail.com\",\n\t\"password\": \"11235\"\n}"
 				},
 				"url": {
 					"raw": "localhost:8000/api/login_check",
@@ -140,7 +140,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NDUxODU3MjAsImV4cCI6MTU0NTE4OTMyMCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiamRvZSJ9.d7zPS8JkX2HWsLANMjc0rrI9yVbUvLPRRaYKF2Z_MwImW6OEW2qMU1yrVnso1K9Zx6RRW7wHZrV0vQq4Sy7trzKamLsPCjHn_-x2ApD2_3jCsFtkGkAbU_rWbg6Dv2Uu11mEjdQS02Abt-EzqThpp3Y34CgRzWhKzvX8BC__RIplWE8saI78oNKq4KnK32rtXKDKMPGvjhrK0BFyMY3HX9Geni3f6F32G8b0mI9_LigJLDWyRCckzC9bOOQaFj25Wlc7BztnBaZPZ1ZkvltkvbuH_ozzpmHTS8wMpz3fUBTu-sHtW9c93uMtWVpvYUkaml7wFEzfcHUhlvRgccqfoR7HOZsuIFJQvRvTroC0ZeftVbhPqNzd5feRZpCGXmdzHmJvcWLJEiezAde2GGz5wJD-f9NWztCKDd6boaiq_H7XRPHtBZok3b8WrJHTQvQY3ypHPeAoUp_qdLnUdtMzFjZ0L5ZEF-ryWgeuzgQSwIQc1C3QoaOIjQ7TNEzNkZMYdpwr_DaBN2OWUviSxC72p6c6H_5wFBkala_XA-5c3zcCRIxoirXGmurIKpoMOG0Gh1fz7PnxEB_p22EpnlSeGAt2lNHU7iZ3ttorNA4vL1Ezpn0-NhWCsvH2CeHjS0WB7S4V20rciCGdZ19pq-kyabzpgxJ-L7Fs38JAdEOLYCA"
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NDUxODkzMjcsImV4cCI6MTU0NTE5MjkyNywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiamRvZSJ9.nliBddKV604VY8uCHPQKM6yFocoUh9Lo7oN8e7qa4isMxHfRW2Ff_xaW2Sdg_43mt4Ewfvav1naUkXaUgepKECgeIL9LmGkPYVxYawQebup1pK-85DhXAHlmg5paI3E9lGB4jgSR7Sa7g8wVbUVfr8TLAAsiuMo_RIBxQYENygmkNpa2_vUtkMdEkytNXAkh-oGK2ezIwg-Cp57_HHhzLV9bt8Sq87fpVHpXHd4hBerL0n79lhJujjYpAOT0-UgtYzvQTls6JTOly3g8KehppyXUy1GckYccoDLW6Uw1OcItCr1ybri_DRK_DtKvYMV5BGXH29GYtta2QaLbxdkkaXzARtwlQdOrmgM7pucQvLe5legN9IHdToe_5T5buHkWD_counPTtJsfweeTv53IZSfS2gr2BpQlToHGmK522huWObvyOHj-Fvijf7AzxekG8UFDc3YgWLsHu5lt_kWtOaNnNOMLJ_MBUbNv5KYuTrB8urWIaiBZS7a7mlUTL4EgayV-TZyc2zeoyQ9YA1SU0c8JDij79dRYva3q2epMWUTbkg3ICjziKHzTzTW4-LRWZPPLDM9Cn7nB0VRgIlxy6oHLTYb81MMGyTGoHrAWZCKZeUmpplwT3JWaRwVDs1yeplSD4uIK5u-vDxuN5IUFDWcoKV5gUOdb6plV10EX5fo"
 					},
 					{
 						"key": "Content-Type",
@@ -149,7 +149,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"title\": \"advert_test\",\n\t\"description\": \"advert_test\"\n}"
+					"raw": "{\n\t\"title\": \"advert_6\",\n\t\"description\": \"advert_6\",\n\t\"category\": 1\n}"
 				},
 				"url": {
 					"raw": "localhost:8000/api/advert",

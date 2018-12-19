@@ -43,6 +43,7 @@ class AdvertController extends FOSRestController
         foreach($adverts as $k => $advert){
             $advertsFormatted[$k]['id'] = $advert->getId();
             $advertsFormatted[$k]['uuid'] = $advert->getUuid();
+            $advertsFormatted[$k]['category'] = $advert->getCategory()->getLabel();
             $advertsFormatted[$k]['title'] = $advert->getTitle();
             $advertsFormatted[$k]['description'] = $advert->getDescription();
             $advertsFormatted[$k]['created_at'] = $advert->getCreatedAt();
@@ -113,7 +114,13 @@ class AdvertController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
         $advert = $em->getRepository('AppBundle:Advert')->findOneBy(["uuid" => $uuid]);
 
+        if(!$advert){
+            $view = $this->view(["advert" => "Not exist"], 200);
+        }
+
         $advertFormatted['id'] = $advert->getId();
+        $advertFormatted['uuid'] = $advert->getUuid();
+        $advertFormatted['category'] = $advert->getCategory()->getLabel();
         $advertFormatted['title'] = $advert->getTitle();
         $advertFormatted['description'] = $advert->getDescription();
         $advertFormatted['created_at'] = $advert->getCreatedAt();
@@ -128,61 +135,57 @@ class AdvertController extends FOSRestController
     }
 
     /**
-     * @Route("/{uuid}/edit", name="api_advert_edit")
-     * @Method({"GET", "POST"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Edit the specific advert"
+     * )
+     * @Rest\Put(
+     *    path= "/advert/{uuid}"
+     * )
      */
-    public function editAction(Request $request, Advert $advert)
+    public function editAction(Request $request, $uuid)
     {
-        $deleteForm = $this->createDeleteForm($advert);
-        $editForm = $this->createForm('AppBundle\Form\AdvertType', $advert);
-        $editForm->handleRequest($request);
+        $repository = $this->getDoctrine()->getRepository(Advert::class);
+        $em = $this->getDoctrine()->getManager();
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        $form = $this->createForm('AppBundle\Form\AdvertType', $advert);
+
+        if ($formEdit->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('api_advert_edit', array('id' => $advert->getId()));
+            $view = $this->view(["advert" => $advert], 200);
+        }else{
+            $view = $this->view($formEdit->getErrors(true), 400);
         }
-
-        return $this->render('advert/edit.html.twig', array(
-            'advert' => $advert,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->handleView($view);
     }
 
-//    /**
-//     * Deletes a advert entity.
-//     *
-//     * @Route("/{id}", name="api_advert_delete")
-//     * @Method("DELETE")
-//     */
-//    public function deleteAction(Request $request, Advert $advert)
-//    {
-//        $form = $this->createDeleteForm($advert);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $em = $this->getDoctrine()->getManager();
-//            $em->remove($advert);
-//            $em->flush();
-//        }
-//
-//        return $this->redirectToRoute('api_advert_index');
-//    }
-//
-////    /**
-////     * Creates a form to delete a advert entity.
-////     *
-////     * @param Advert $advert The advert entity
-////     *
-////     * @return \Symfony\Component\Form\Form The form
-////     */
-////    private function createDeleteForm(Advert $advert)
-////    {
-////        return $this->createFormBuilder()
-////            ->setAction($this->generateUrl('api_advert_delete', array('id' => $advert->getId())))
-////            ->setMethod('DELETE')
-////            ->getForm()
-////        ;
-////    }
+    /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Delete the specific advert"
+     * )
+     * @Rest\Delete(
+     *    path= "/advert/{uuid}"
+     * )
+     */
+    public function deleteAction($uuid){
+
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Advert::class);
+
+        $partner = $repository->findOneBy(array('partnerUuid' => $partner_uuid));
+
+        if( !$partner ){
+            $failureResponse = new FailureResponse(null, Response::HTTP_NOT_FOUND);
+            $failureResponse->setMessage("Error, unsupported delete request. Object with partnerUuid '" . $partner_uuid . "' does not exist.", "requestValidation", Response::HTTP_NOT_FOUND);
+
+            return $failureResponse;
+        }
+
+        $em->remove($partner);
+        $em->flush();
+
+        return $this->view(null, Response::HTTP_NO_CONTENT);
+
+    }
 }
