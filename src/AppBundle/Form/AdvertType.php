@@ -15,7 +15,8 @@ class AdvertType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('description');
+            ->add('description')
+            ->add('category');
     }
 
     /**

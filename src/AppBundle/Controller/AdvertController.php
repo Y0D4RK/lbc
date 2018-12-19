@@ -75,13 +75,6 @@ class AdvertController extends FOSRestController
         $advert->setUuid($uuid);
 
         $form = $this->createForm(AdvertType::class, $advert);
-//        $validator = $this->get('validator');
-//        $errors = $validator->validate($advert);
-//        if (count($errors) > 0) {
-//            $errorsString = (string) $errors;
-//            return new Response($errorsString);
-//        }
-//        return new Response('The advert is valid! Yes!');
 
         $form->submit($request->request->all());
 
@@ -89,7 +82,17 @@ class AdvertController extends FOSRestController
             $em = $this->getDoctrine()->getManager();
             $em->persist($advert);
             $em->flush($advert);
-            $view = $this->view($advert, 201);
+
+            $advertFormatted['id'] = $advert->getId();
+            $advertFormatted['title'] = $advert->getTitle();
+            $advertFormatted['description'] = $advert->getDescription();
+            $advertFormatted['created_at'] = $advert->getCreatedAt();
+            $advertFormatted['user']['id'] = $advert->getUser()->getId();
+            $advertFormatted['user']['email'] = $advert->getUser()->getEmail();
+            $advertFormatted['user']['firstname'] = $advert->getUser()->getFirstname();
+            $advertFormatted['user']['lastname'] = $advert->getUser()->getLastname();
+
+            $view = $this->view(["advert" => $advertFormatted], 201);
         }else{
             $view = $this->view($form->getErrors(true), 400);
         }

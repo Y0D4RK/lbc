@@ -20,5 +20,6 @@
     </orderEntry>
     <orderEntry type="module" module-name="moving_mate" />
     <orderEntry type="module" module-name="les-reducs-api" />
+    <orderEntry type="module" module-name="lbc-test" />
   </component>
 </module>
