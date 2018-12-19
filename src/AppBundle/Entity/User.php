@@ -1,14 +1,11 @@
 <?php
 
-// src/AppBundle/Entity/User.php
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Security\Core\User\UserInterface;
 use JMS\Serializer\Annotation\Exclude;
-use JMS\Serializer\Annotation\ExclusionPolicy;
 
 /**
  * @ORM\Table(name="`user`")
@@ -56,6 +53,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @Exclude()
      */
     private $updatedAt;
 
@@ -64,16 +62,16 @@ class User implements UserInterface
      */
     private $isActive;
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="Advert", mappedBy="category")
-//     */
-//    private $adverts;
+    /**
+     * @ORM\OneToMany(targetEntity="Advert", mappedBy="user")
+     */
+    private $adverts;
 
     public function __construct()
     {
         $this->isActive = true;
         $this->createdAt = new \DateTime("now");
-//        $this->adverts = new ArrayCollection();
+        $this->adverts = new ArrayCollection();
     }
 
     public function getUsername()
@@ -187,20 +185,37 @@ class User implements UserInterface
         $this->updatedAt = new \DateTime("now");
     }
 
-//    public function addAdvert(\AppBundle\Entity\Advert $advert)
-//    {
-//        $this->adverts[] = $advert;
-//
-//        return $this;
-//    }
+    /**
+     * Add advert
+     *
+     * @param \AppBundle\Entity\Advert $advert
+     *
+     * @return User
+     */
+    public function addAdvert(\AppBundle\Entity\Advert $advert)
+    {
+        $this->adverts[] = $advert;
 
-//    public function removeAdvert(\AppBundle\Entity\Advert $advert)
-//    {
-//        $this->adverts->removeElement($advert);
-//    }
+        return $this;
+    }
 
-//    public function getAdverts()
-//    {
-//        return $this->adverts;
-//    }
+    /**
+     * Remove advert
+     *
+     * @param \AppBundle\Entity\Advert $advert
+     */
+    public function removeAdvert(\AppBundle\Entity\Advert $advert)
+    {
+        $this->adverts->removeElement($advert);
+    }
+
+    /**
+     * Get adverts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdverts()
+    {
+        return $this->adverts;
+    }
 }

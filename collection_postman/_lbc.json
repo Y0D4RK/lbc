@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "751eb22b-eac5-4aa7-b866-650b3c7b897c",
+		"name": "collection_postman_lbc",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "symfony_index",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:8000/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login_check",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"jdoe\",\n\t\"password\": \"11235\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8000/api/login_check",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login_check"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "symfony_api",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NDUxODU3MjAsImV4cCI6MTU0NTE4OTMyMCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiamRvZSJ9.d7zPS8JkX2HWsLANMjc0rrI9yVbUvLPRRaYKF2Z_MwImW6OEW2qMU1yrVnso1K9Zx6RRW7wHZrV0vQq4Sy7trzKamLsPCjHn_-x2ApD2_3jCsFtkGkAbU_rWbg6Dv2Uu11mEjdQS02Abt-EzqThpp3Y34CgRzWhKzvX8BC__RIplWE8saI78oNKq4KnK32rtXKDKMPGvjhrK0BFyMY3HX9Geni3f6F32G8b0mI9_LigJLDWyRCckzC9bOOQaFj25Wlc7BztnBaZPZ1ZkvltkvbuH_ozzpmHTS8wMpz3fUBTu-sHtW9c93uMtWVpvYUkaml7wFEzfcHUhlvRgccqfoR7HOZsuIFJQvRvTroC0ZeftVbhPqNzd5feRZpCGXmdzHmJvcWLJEiezAde2GGz5wJD-f9NWztCKDd6boaiq_H7XRPHtBZok3b8WrJHTQvQY3ypHPeAoUp_qdLnUdtMzFjZ0L5ZEF-ryWgeuzgQSwIQc1C3QoaOIjQ7TNEzNkZMYdpwr_DaBN2OWUviSxC72p6c6H_5wFBkala_XA-5c3zcCRIxoirXGmurIKpoMOG0Gh1fz7PnxEB_p22EpnlSeGAt2lNHU7iZ3ttorNA4vL1Ezpn0-NhWCsvH2CeHjS0WB7S4V20rciCGdZ19pq-kyabzpgxJ-L7Fs38JAdEOLYCA"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:8000/api",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list_adverts",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NDUxODU3MjAsImV4cCI6MTU0NTE4OTMyMCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiamRvZSJ9.d7zPS8JkX2HWsLANMjc0rrI9yVbUvLPRRaYKF2Z_MwImW6OEW2qMU1yrVnso1K9Zx6RRW7wHZrV0vQq4Sy7trzKamLsPCjHn_-x2ApD2_3jCsFtkGkAbU_rWbg6Dv2Uu11mEjdQS02Abt-EzqThpp3Y34CgRzWhKzvX8BC__RIplWE8saI78oNKq4KnK32rtXKDKMPGvjhrK0BFyMY3HX9Geni3f6F32G8b0mI9_LigJLDWyRCckzC9bOOQaFj25Wlc7BztnBaZPZ1ZkvltkvbuH_ozzpmHTS8wMpz3fUBTu-sHtW9c93uMtWVpvYUkaml7wFEzfcHUhlvRgccqfoR7HOZsuIFJQvRvTroC0ZeftVbhPqNzd5feRZpCGXmdzHmJvcWLJEiezAde2GGz5wJD-f9NWztCKDd6boaiq_H7XRPHtBZok3b8WrJHTQvQY3ypHPeAoUp_qdLnUdtMzFjZ0L5ZEF-ryWgeuzgQSwIQc1C3QoaOIjQ7TNEzNkZMYdpwr_DaBN2OWUviSxC72p6c6H_5wFBkala_XA-5c3zcCRIxoirXGmurIKpoMOG0Gh1fz7PnxEB_p22EpnlSeGAt2lNHU7iZ3ttorNA4vL1Ezpn0-NhWCsvH2CeHjS0WB7S4V20rciCGdZ19pq-kyabzpgxJ-L7Fs38JAdEOLYCA"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:8000/api/adverts",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"adverts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "uuid_show_advert",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NDUxODU3MjAsImV4cCI6MTU0NTE4OTMyMCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiamRvZSJ9.d7zPS8JkX2HWsLANMjc0rrI9yVbUvLPRRaYKF2Z_MwImW6OEW2qMU1yrVnso1K9Zx6RRW7wHZrV0vQq4Sy7trzKamLsPCjHn_-x2ApD2_3jCsFtkGkAbU_rWbg6Dv2Uu11mEjdQS02Abt-EzqThpp3Y34CgRzWhKzvX8BC__RIplWE8saI78oNKq4KnK32rtXKDKMPGvjhrK0BFyMY3HX9Geni3f6F32G8b0mI9_LigJLDWyRCckzC9bOOQaFj25Wlc7BztnBaZPZ1ZkvltkvbuH_ozzpmHTS8wMpz3fUBTu-sHtW9c93uMtWVpvYUkaml7wFEzfcHUhlvRgccqfoR7HOZsuIFJQvRvTroC0ZeftVbhPqNzd5feRZpCGXmdzHmJvcWLJEiezAde2GGz5wJD-f9NWztCKDd6boaiq_H7XRPHtBZok3b8WrJHTQvQY3ypHPeAoUp_qdLnUdtMzFjZ0L5ZEF-ryWgeuzgQSwIQc1C3QoaOIjQ7TNEzNkZMYdpwr_DaBN2OWUviSxC72p6c6H_5wFBkala_XA-5c3zcCRIxoirXGmurIKpoMOG0Gh1fz7PnxEB_p22EpnlSeGAt2lNHU7iZ3ttorNA4vL1Ezpn0-NhWCsvH2CeHjS0WB7S4V20rciCGdZ19pq-kyabzpgxJ-L7Fs38JAdEOLYCA"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:8000/api/advert/dafed560-8107-11e8-a079-0242c7ad7684",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"advert",
+						"dafed560-8107-11e8-a079-0242c7ad7684"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_advert",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NDUxODU3MjAsImV4cCI6MTU0NTE4OTMyMCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiamRvZSJ9.d7zPS8JkX2HWsLANMjc0rrI9yVbUvLPRRaYKF2Z_MwImW6OEW2qMU1yrVnso1K9Zx6RRW7wHZrV0vQq4Sy7trzKamLsPCjHn_-x2ApD2_3jCsFtkGkAbU_rWbg6Dv2Uu11mEjdQS02Abt-EzqThpp3Y34CgRzWhKzvX8BC__RIplWE8saI78oNKq4KnK32rtXKDKMPGvjhrK0BFyMY3HX9Geni3f6F32G8b0mI9_LigJLDWyRCckzC9bOOQaFj25Wlc7BztnBaZPZ1ZkvltkvbuH_ozzpmHTS8wMpz3fUBTu-sHtW9c93uMtWVpvYUkaml7wFEzfcHUhlvRgccqfoR7HOZsuIFJQvRvTroC0ZeftVbhPqNzd5feRZpCGXmdzHmJvcWLJEiezAde2GGz5wJD-f9NWztCKDd6boaiq_H7XRPHtBZok3b8WrJHTQvQY3ypHPeAoUp_qdLnUdtMzFjZ0L5ZEF-ryWgeuzgQSwIQc1C3QoaOIjQ7TNEzNkZMYdpwr_DaBN2OWUviSxC72p6c6H_5wFBkala_XA-5c3zcCRIxoirXGmurIKpoMOG0Gh1fz7PnxEB_p22EpnlSeGAt2lNHU7iZ3ttorNA4vL1Ezpn0-NhWCsvH2CeHjS0WB7S4V20rciCGdZ19pq-kyabzpgxJ-L7Fs38JAdEOLYCA"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"advert_test\",\n\t\"description\": \"advert_test\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8000/api/advert",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"advert"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
