@@ -3,12 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as Serializer;
-use JMS\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="advert")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AdvertRepository")
+ * @UniqueEntity("uuid")
+ * @UniqueEntity("title")
  */
 class Advert
 {
@@ -22,15 +24,20 @@ class Advert
     private $id;
 
     /**
-     * @var string
+     * @var string $uuid
+     * @ORM\Column(name="uuid", type="string", length=255, nullable=false, unique=true)
+     */
+    private $uuid;
+
+    /**
+     * @var string $title
+     * @ORM\Column(name="title", type="string", length=255, nullable=false, unique=true)
+     * @Assert\NotBlank
      *
-     * @ORM\Column(name="title", type="string", length=255, unique=true)
      */
     private $title;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
@@ -48,12 +55,12 @@ class Advert
 //    private $category;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $updatedAt;
 
@@ -61,6 +68,7 @@ class Advert
     public function __construct()
     {
         $this->createdAt = new \DateTime("now");
+        $this->updatedAt = new \DateTime("now");
     }
 
     public function __toString()
@@ -172,6 +180,22 @@ class Advert
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @param mixed $uuid
+     */
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
     }
 
     /**

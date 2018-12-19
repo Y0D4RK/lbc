@@ -17,7 +17,7 @@ framework:
         strict_requirements: ~
     form: ~
     csrf_protection: ~
-    validation: { enable_annotations: true }
+    validation: { enabled: true, enable_annotations: true }
     #serializer: { enable_annotations: true }
     default_locale: '%locale%'
     trusted_hosts: ~
@@ -81,24 +81,13 @@ nelmio_api_doc:
         default:
             path_patterns: [ ^/api ]
             host_patterns: [  ]
-#        internal:
-#            path_patterns: [ ^/internal ]
-#        commercial:
-#            path_patterns: [ ^/commercial ]
     documentation:
         host: 127.0.0.1:8000
         schemes: [HTTP]
         info:
-            title: Lbc
+            title: LBC
             description: Application lbc
             version: 1.0.0
-#        securityDefinitions:
-#            Bearer:
-#                type: apiKey
-#                description: 'Value: Bearer {JWT}'
-#                name: Authorization
-#                in: Header
-
 nelmio_cors:
     paths:
         '^/':
@@ -116,11 +105,14 @@ jms_serializer:
 
 fos_rest:
     routing_loader:
-        default_format: json                            # All responses should be JSON formated
-        include_format: false                           # We do not include format in request, so that all responses
-                                                        # will eventually be JSON formated
-    format_listener:
-        rules:
-            - { priorities: ['json', 'xml'], fallback_format: json, prefer_extension: false }
+        include_format: false
     view:
         view_response_listener: true
+        formats: { json: true, xml: false, rss: false }
+    format_listener:
+        rules:
+            - { path: '^/', priorities: ['json'], fallback_format: 'json', prefer_extension: false }
+    serializer:
+        serialize_null: false
+    body_listener:
+        enabled: true

@@ -18,5 +18,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="moving_mate" />
+    <orderEntry type="module" module-name="les-reducs-api" />
   </component>
 </module>

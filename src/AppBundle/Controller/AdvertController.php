@@ -2,26 +2,31 @@
 
 namespace AppBundle\Controller;
 
+use Ramsey\Uuid\Uuid;
 use AppBundle\Entity\Advert;
+use AppBundle\Form\AdvertType;
 use FOS\RestBundle\Controller\FOSRestController;
 use Swagger\Annotations as SWG;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Advert controller.
  *
- * @Route("api/advert")
+ * @Route("api")
  */
 class AdvertController extends FOSRestController
 {
-
     /**
-     * @Route("/", name="api_advert_index", methods={"GET"})
      * @SWG\Response(
      *     response=200,
      *     description="Return the adverts"
+     * )
+     * @Rest\Get(
+     *    path= "/adverts/"
      * )
      */
     public function indexAction()
@@ -37,6 +42,7 @@ class AdvertController extends FOSRestController
         $advertsFormatted = [];
         foreach($adverts as $k => $advert){
             $advertsFormatted[$k]['id'] = $advert->getId();
+            $advertsFormatted[$k]['uuid'] = $advert->getUuid();
             $advertsFormatted[$k]['title'] = $advert->getTitle();
             $advertsFormatted[$k]['description'] = $advert->getDescription();
             $advertsFormatted[$k]['created_at'] = $advert->getCreatedAt();
@@ -52,51 +58,74 @@ class AdvertController extends FOSRestController
     }
 
     /**
-     * Creates a new advert entity.
-     *
-     * @Route("/new", name="api_advert_new")
-     * @Method({"GET", "POST"})
+     * @SWG\Response(
+     *     response=201,
+     *     description="Create a new advert"
+     * )
+     * @Rest\Post(
+     *     path= "/advert"
+     * )
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
      */
     public function newAction(Request $request)
     {
         $advert = new Advert();
-        $form = $this->createForm('AppBundle\Form\AdvertType', $advert);
-        $form->handleRequest($request);
+        $advert->setUser($this->getUser());
+        $uuid = Uuid::uuid1();
+        $advert->setUuid($uuid);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $form = $this->createForm(AdvertType::class, $advert);
+//        $validator = $this->get('validator');
+//        $errors = $validator->validate($advert);
+//        if (count($errors) > 0) {
+//            $errorsString = (string) $errors;
+//            return new Response($errorsString);
+//        }
+//        return new Response('The advert is valid! Yes!');
+
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($advert);
-            $em->flush();
-
-            return $this->redirectToRoute('api_advert_show', array('id' => $advert->getId()));
+            $em->flush($advert);
+            $view = $this->view($advert, 201);
+        }else{
+            $view = $this->view($form->getErrors(true), 400);
         }
-
-        return $this->render('advert/new.html.twig', array(
-            'advert' => $advert,
-            'form' => $form->createView(),
-        ));
+        return $this->handleView($view);
     }
 
     /**
-     * Finds and displays a advert entity.
-     *
-     * @Route("/{id}", name="api_advert_show")
-     * @Method("GET")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return the specific advert"
+     * )
+     * @Rest\Get(
+     *    path= "/advert/{uuid}"
+     * )
      */
-    public function showAction(Advert $advert)
+    public function showAction($uuid)
     {
-        $deleteForm = $this->createDeleteForm($advert);
+        $em = $this->getDoctrine()->getManager();
+        $advert = $em->getRepository('AppBundle:Advert')->findOneBy(["uuid" => $uuid]);
 
-        return $this->render('advert/show.html.twig', array(
-            'advert' => $advert,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $advertFormatted['id'] = $advert->getId();
+        $advertFormatted['title'] = $advert->getTitle();
+        $advertFormatted['description'] = $advert->getDescription();
+        $advertFormatted['created_at'] = $advert->getCreatedAt();
+        $advertFormatted['user']['id'] = $advert->getUser()->getId();
+        $advertFormatted['user']['email'] = $advert->getUser()->getEmail();
+        $advertFormatted['user']['firstname'] = $advert->getUser()->getFirstname();
+        $advertFormatted['user']['lastname'] = $advert->getUser()->getLastname();
+
+        $view = $this->view(["advert" => $advertFormatted], 200);
+
+        return $this->handleView($view);
     }
 
     /**
-     * Displays a form to edit an existing advert entity.
-     *
-     * @Route("/{id}/edit", name="api_advert_edit")
+     * @Route("/{uuid}/edit", name="api_advert_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Advert $advert)
@@ -118,39 +147,39 @@ class AdvertController extends FOSRestController
         ));
     }
 
-    /**
-     * Deletes a advert entity.
-     *
-     * @Route("/{id}", name="api_advert_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Advert $advert)
-    {
-        $form = $this->createDeleteForm($advert);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($advert);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('api_advert_index');
-    }
-
-    /**
-     * Creates a form to delete a advert entity.
-     *
-     * @param Advert $advert The advert entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Advert $advert)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('api_advert_delete', array('id' => $advert->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
+//    /**
+//     * Deletes a advert entity.
+//     *
+//     * @Route("/{id}", name="api_advert_delete")
+//     * @Method("DELETE")
+//     */
+//    public function deleteAction(Request $request, Advert $advert)
+//    {
+//        $form = $this->createDeleteForm($advert);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $em = $this->getDoctrine()->getManager();
+//            $em->remove($advert);
+//            $em->flush();
+//        }
+//
+//        return $this->redirectToRoute('api_advert_index');
+//    }
+//
+////    /**
+////     * Creates a form to delete a advert entity.
+////     *
+////     * @param Advert $advert The advert entity
+////     *
+////     * @return \Symfony\Component\Form\Form The form
+////     */
+////    private function createDeleteForm(Advert $advert)
+////    {
+////        return $this->createFormBuilder()
+////            ->setAction($this->generateUrl('api_advert_delete', array('id' => $advert->getId())))
+////            ->setMethod('DELETE')
+////            ->getForm()
+////        ;
+////    }
 }
