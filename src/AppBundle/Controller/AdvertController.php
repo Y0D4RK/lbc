@@ -148,10 +148,11 @@ class AdvertController extends FOSRestController
         $repository = $this->getDoctrine()->getRepository(Advert::class);
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm('AppBundle\Form\AdvertType', $advert);
+        $formEdit = $this->createForm('AppBundle\Form\AdvertType', $advert);
 
         if ($formEdit->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
             $view = $this->view(["advert" => $advert], 200);
         }else{
             $view = $this->view($formEdit->getErrors(true), 400);
@@ -173,19 +174,16 @@ class AdvertController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(Advert::class);
 
-        $partner = $repository->findOneBy(array('partnerUuid' => $partner_uuid));
+        $advert = $repository->findOneBy(array('uuid' => $uuid));
+        var_dump($advert); exit();
+        if( !$advert ){
+        }else{
+            $em->remove($advert);
+            $em->flush();
 
-        if( !$partner ){
-            $failureResponse = new FailureResponse(null, Response::HTTP_NOT_FOUND);
-            $failureResponse->setMessage("Error, unsupported delete request. Object with partnerUuid '" . $partner_uuid . "' does not exist.", "requestValidation", Response::HTTP_NOT_FOUND);
-
-            return $failureResponse;
         }
 
-        $em->remove($partner);
-        $em->flush();
 
         return $this->view(null, Response::HTTP_NO_CONTENT);
-
     }
 }
