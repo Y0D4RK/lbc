@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/lbc.iml" filepath="$PROJECT_DIR$/.idea/lbc.iml" />
       <module fileurl="file://$PROJECT_DIR$/../lbc-ajax/.idea/lbc-ajax.iml" filepath="$PROJECT_DIR$/../lbc-ajax/.idea/lbc-ajax.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../lbc-test/.idea/lbc-test.iml" filepath="$PROJECT_DIR$/../lbc-test/.idea/lbc-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/../0_ELIXIS/DEVELIXIS/les-reducs-api/.idea/les-reducs-api.iml" filepath="$PROJECT_DIR$/../0_ELIXIS/DEVELIXIS/les-reducs-api/.idea/les-reducs-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/../0_ESGI/moving_mate/.idea/moving_mate.iml" filepath="$PROJECT_DIR$/../0_ESGI/moving_mate/.idea/moving_mate.iml" />
     </modules>

@@ -35,7 +35,7 @@ class AdvertController extends FOSRestController
 
         $adverts = $em->getRepository('AppBundle:Advert')->findAll();
 
-        if (empty($adverts)) {
+        if (!$adverts) {
             return $this->view(['adverts' => 'not exist'], 200);
         }
 
@@ -82,7 +82,7 @@ class AdvertController extends FOSRestController
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($advert);
-            $em->flush($advert);
+            $em->flush();
 
             $advertFormatted['id'] = $advert->getId();
             $advertFormatted['title'] = $advert->getTitle();
@@ -145,13 +145,16 @@ class AdvertController extends FOSRestController
      */
     public function editAction(Request $request, $uuid)
     {
-        $repository = $this->getDoctrine()->getRepository(Advert::class);
         $em = $this->getDoctrine()->getManager();
+        $advert = $em->getRepository('AppBundle:Advert')->findOneBy(["uuid" => $uuid]);
 
         $formEdit = $this->createForm('AppBundle\Form\AdvertType', $advert);
+        $formEdit->submit($request->request->all());
 
         if ($formEdit->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($advert);
+            $em->flush();
 
             $view = $this->view(["advert" => $advert], 200);
         }else{
@@ -169,21 +172,21 @@ class AdvertController extends FOSRestController
      *    path= "/advert/{uuid}"
      * )
      */
-    public function deleteAction($uuid){
-
+    public function deleteAction($uuid)
+    {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Advert::class);
+        $advert = $em->getRepository('AppBundle:Advert')->findOneBy(["uuid" => $uuid]);
 
-        $advert = $repository->findOneBy(array('uuid' => $uuid));
-        var_dump($advert); exit();
-        if( !$advert ){
+        if(!$advert){
+            $view = $this->view(["advert" => "Advert not exist", "status"=>"400"], 400);
         }else{
             $em->remove($advert);
             $em->flush();
 
+            $view = $this->view(["message" => "Advert deleted", "status"=>"204"], 204);
         }
+        return $this->handleView($view);
 
 
-        return $this->view(null, Response::HTTP_NO_CONTENT);
     }
 }
