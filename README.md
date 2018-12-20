@@ -40,3 +40,9 @@
 - user: jdoe
 - password: 11235
 
+## 5. Ajax interface
+
+The interface is [HERE !](https://github.com/Y0D4RK/lbc-interface)
+
+![Image interface](http://www.xlwlx.fr/public/img/lbc_interface.png)
+
