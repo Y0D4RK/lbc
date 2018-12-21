@@ -34,6 +34,7 @@ class AdvertController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
 
         $adverts = $em->getRepository('AppBundle:Advert')->findAll();
+        $categories = $em->getRepository('AppBundle:Category')->findAll();
 
         if (!$adverts) {
             return $this->view(['adverts' => 'not exist'], 200);
@@ -53,7 +54,7 @@ class AdvertController extends FOSRestController
             $advertsFormatted[$k]['user']['lastname'] = $advert->getUser()->getLastname();
         }
 
-        $view = $this->view(["adverts" => $advertsFormatted], 200);
+        $view = $this->view(["adverts" => $advertsFormatted, "categories" => $categories], 200);
 
         return $this->handleView($view);
     }
@@ -112,10 +113,13 @@ class AdvertController extends FOSRestController
     public function showAction($uuid)
     {
         $em = $this->getDoctrine()->getManager();
+
+
         $advert = $em->getRepository('AppBundle:Advert')->findOneBy(["uuid" => $uuid]);
+        $categories = $em->getRepository('AppBundle:Category')->findAll();
 
         if(!$advert){
-            $view = $this->view(["advert" => "Not exist"], 200);
+            $view = $this->view(["advert" => "Not exist"], 404);
         }
 
         $advertFormatted['id'] = $advert->getId();
@@ -129,7 +133,7 @@ class AdvertController extends FOSRestController
         $advertFormatted['user']['firstname'] = $advert->getUser()->getFirstname();
         $advertFormatted['user']['lastname'] = $advert->getUser()->getLastname();
 
-        $view = $this->view(["advert" => $advertFormatted], 200);
+        $view = $this->view(["advert" => $advertFormatted, "categories" => $categories], 200);
 
         return $this->handleView($view);
     }
