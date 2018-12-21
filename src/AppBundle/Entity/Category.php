@@ -34,9 +34,17 @@ class Category
      */
     private $adverts;
 
+    /**
+     * Many Categories have many Field.
+     * @ORM\ManyToMany(targetEntity="Field")
+     * @ORM\JoinTable(name="categories_fields"),
+     */
+    private $fields;
+
     public function __construct()
     {
         $this->adverts = new ArrayCollection();
+        $this->fields = new ArrayCollection();
     }
 
     public function __toString()
@@ -110,5 +118,39 @@ class Category
     public function getAdverts()
     {
         return $this->adverts;
+    }
+
+    /**
+     * Add field
+     *
+     * @param \AppBundle\Entity\Field $field
+     *
+     * @return Category
+     */
+    public function addField(\AppBundle\Entity\Field $field)
+    {
+        $this->fields[] = $field;
+
+        return $this;
+    }
+
+    /**
+     * Remove field
+     *
+     * @param \AppBundle\Entity\Field $field
+     */
+    public function removeField(\AppBundle\Entity\Field $field)
+    {
+        $this->fields->removeElement($field);
+    }
+
+    /**
+     * Get fields
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFields()
+    {
+        return $this->fields;
     }
 }

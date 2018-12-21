@@ -44,7 +44,10 @@ class AdvertController extends FOSRestController
         foreach($adverts as $k => $advert){
             $advertsFormatted[$k]['id'] = $advert->getId();
             $advertsFormatted[$k]['uuid'] = $advert->getUuid();
-            $advertsFormatted[$k]['category'] = $advert->getCategory()->getLabel();
+            $advertsFormatted[$k]['category']['label'] = $advert->getCategory()->getLabel();
+            foreach($advert->getCategory()->getFields() as $v => $field){
+                $advertsFormatted[$k]['category']['fields'][$v] = $field->getName();
+            }
             $advertsFormatted[$k]['title'] = $advert->getTitle();
             $advertsFormatted[$k]['description'] = $advert->getDescription();
             $advertsFormatted[$k]['created_at'] = $advert->getCreatedAt();
@@ -124,7 +127,10 @@ class AdvertController extends FOSRestController
 
         $advertFormatted['id'] = $advert->getId();
         $advertFormatted['uuid'] = $advert->getUuid();
-        $advertFormatted['category'] = $advert->getCategory()->getLabel();
+        $advertFormatted['category']['label'] = $advert->getCategory()->getLabel();
+        foreach($advert->getCategory()->getFields() as $v => $field){
+            $advertFormatted['category']['fields'][$v] = $field->getName();
+        }
         $advertFormatted['title'] = $advert->getTitle();
         $advertFormatted['description'] = $advert->getDescription();
         $advertFormatted['created_at'] = $advert->getCreatedAt();
